@@ -5,6 +5,11 @@
 #include "doctest/doctest.h"
 #include "dossier_test/test.hpp"
 #include "dossier_test/boids.hpp"
+#include <vector>
+
+constexpr int FLOAT_MIN = 0;
+constexpr int FLOAT_MAX = 1;
+
 
 int main(int argc, char* argv[])
 {
@@ -22,48 +27,22 @@ int main(int argc, char* argv[])
     // p6::Angle rotation = 0.011_turn;
     ctx.maximize_window();
 
-    // Declare your infinite update loop. == fonction de base
-    // ctx.update = [&]() {
-    //     ctx.background(p6::NamedColor::Blue);
-    //     ctx.circle(
-    //         p6::Center{ctx.mouse()},
-    //         p6::Radius{0.2f}
-    //     );
-    // };
-    //base_function(ctx);
+
+    std::vector<Boids> boids_tab;
+    for(int i = 0; i<20; i++){
+        Boids T(ctx.aspect_ratio());
+        boids_tab.push_back(T);
+    }
 
 
-    /***********TP1***********/
-    //couleurs changees
-    // circle_erase(ctx);
-
-    //changement de param
-    // circle_different_param(ctx);  
-
-    //square
-    //test_square(ctx, rotation);
-
-    //line
-    // test_line(ctx);
-
-    //react mouse pressed
-    // read_moussed_pressed(ctx);
-    // draw_rectangle(ctx);
-
-
-    // test_square_move(ctx);
-    glm::vec2 P = glm::vec2{0., 0.};
 
     ctx.update = [&](){
-        ctx.background(p6::NamedColor::Red);
+        ctx.background(p6::NamedColor::White);
 
-      
-
-        // Boids b = Boids(P, 0.3);
-        draw_boids(ctx, P, 0.3);
-        P+=0.01;
-
-        
+        for(int i = 0; i<20; i++){
+            boids_tab[i].drawBoids(ctx);
+            boids_tab[i].updateBoids();
+        }
         
     };
 
