@@ -7,8 +7,8 @@
 #include "dossier_test/boids.hpp"
 #include <vector>
 
-constexpr int FLOAT_MIN = 0;
-constexpr int FLOAT_MAX = 1;
+// constexpr int FLOAT_MIN = 0;
+// constexpr int FLOAT_MAX = 1;
 
 
 int main(int argc, char* argv[])

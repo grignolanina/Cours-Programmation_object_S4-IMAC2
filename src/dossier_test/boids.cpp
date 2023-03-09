@@ -1,5 +1,7 @@
 #include "dossier_test/boids.hpp"
+#include <corecrt_math.h>
 #include <stdlib.h>
+#include <vcruntime.h>
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 
@@ -16,6 +18,7 @@ Boids::Boids(float aspect_ratio):
 	m_speed(p6::random::number(0., 0.02), p6::random::number(0., 0.02)),
 	m_aspect_ratio(aspect_ratio)
 {}
+
 
 // Boids::Boids(Boids& b):m_pos(b.m_pos), m_color(b.m_color), m_size(b.m_size){}
 
@@ -37,3 +40,18 @@ void Boids::updateBoids(){
 		m_pos.y *= -1;
 	}
 }
+
+// void Boids::separationBoids(std::vector<Boids> boids){
+// 	float perceptionRadius = 0.05;
+// 	glm::vec2 direction = glm::vec2();
+// 	int count ;
+// 	for(auto& elem : boids){
+// 		float distance = sqrt((this->m_pos.x-elem.m_pos.x)*(this->m_pos.x-elem.m_pos.x)+(this->m_pos.y-elem.m_pos.y)*(this->m_pos.y-elem.m_pos.y));
+// 		//elem pas ok
+// 		// if(elem != this && distance < perceptionRadius){
+// 		// 	float difference = 
+// 		// }
+
+// 	}
+
+// }

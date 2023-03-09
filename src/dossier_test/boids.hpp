@@ -17,12 +17,15 @@ class Boids{
 	// Boids();
 	// Boids(glm::vec2 pos, glm::vec3 color, float size);
 	explicit Boids(float aspect_ratio);
+
 	// Boids(Boids& b); //par copie
 
 
 	void drawBoids(p6::Context& ctx) const;
 
 	void updateBoids();
+
+	// void separationBoids(std::vector<Boids> boids);
 
 };
 
