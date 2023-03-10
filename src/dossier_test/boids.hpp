@@ -23,9 +23,9 @@ class Boids{
 
 	void drawBoids(p6::Context& ctx) const;
 
-	void updateBoids();
+	void updateBoids(std::vector<Boids>& boids_tab);
 
-	// void separationBoids(std::vector<Boids> boids);
+	void separationBoids(std::vector<Boids>& boids_tab);
 
 };
 

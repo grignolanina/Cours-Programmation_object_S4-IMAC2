@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 
         for(int i = 0; i<20; i++){
             boids_tab[i].drawBoids(ctx);
-            boids_tab[i].updateBoids();
+            boids_tab[i].updateBoids(boids_tab);
         }
         
     };

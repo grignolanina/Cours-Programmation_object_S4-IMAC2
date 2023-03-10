@@ -30,28 +30,43 @@ void Boids::drawBoids(p6::Context& ctx) const{
 	ctx.use_stroke = false;
 }
 
-void Boids::updateBoids(){
+void Boids::updateBoids(std::vector<Boids>& boids_tab){
 	glm::vec2 displacement = p6::rotated_by(m_dir, m_speed);
 	m_pos += displacement;
 	if(abs(m_pos.x)>m_aspect_ratio){
 		m_pos.x *= -1;
 	}
-	if(abs(m_pos.y)>m_aspect_ratio){
+	if(abs(m_pos.y)>1){
 		m_pos.y *= -1;
 	}
+
+	for(auto& elem: boids_tab){
+		elem.separationBoids(boids_tab);
+	}
+
+
 }
 
-// void Boids::separationBoids(std::vector<Boids> boids){
-// 	float perceptionRadius = 0.05;
-// 	glm::vec2 direction = glm::vec2();
-// 	int count ;
-// 	for(auto& elem : boids){
-// 		float distance = sqrt((this->m_pos.x-elem.m_pos.x)*(this->m_pos.x-elem.m_pos.x)+(this->m_pos.y-elem.m_pos.y)*(this->m_pos.y-elem.m_pos.y));
-// 		//elem pas ok
-// 		// if(elem != this && distance < perceptionRadius){
-// 		// 	float difference = 
-// 		// }
+//pour éviter les collisions
+void Boids::separationBoids(std::vector<Boids>& boids_tab){
+	float perceptionRadius = 0.1;
+	glm::vec2 newPos = glm::vec2();
+	int count =0;
 
-// 	}
+	for(auto& elem : boids_tab){
+		float distance = sqrt((this->m_pos.x-elem.m_pos.x)*(this->m_pos.x-elem.m_pos.x)+(this->m_pos.y-elem.m_pos.y)*(this->m_pos.y-elem.m_pos.y));
+		//elem pas ok
+		if(&elem != this && distance < perceptionRadius){
+			glm::vec2 difference = this->m_pos - elem.m_pos;
+			difference = difference/((distance/perceptionRadius)*(distance/perceptionRadius));
+			newPos = difference; 
+			count++;
+		}
 
-// }
+	}
+	if(count > 0){
+		this->m_pos += newPos;
+	}
+	
+	
+}
