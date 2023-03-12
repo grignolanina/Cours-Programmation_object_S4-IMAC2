@@ -34,14 +34,26 @@ int main(int argc, char* argv[])
         boids_tab.push_back(T);
     }
 
+    float radius = 0.05;
+    float sRadius = 0.19;
+    float cRadius = 0.4;
+    float aRadius = 0.2;
 
 
     ctx.update = [&](){
         ctx.background(p6::NamedColor::White);
 
+        ImGui::Begin("Params");
+        ImGui::SliderFloat("Size", &radius, 0.f, 1.f, "%.3f", 0); 
+        ImGui::SliderFloat("Separation", &sRadius, 0.f, 1.f, "%.3f", 0); 
+        ImGui::SliderFloat("Cohesion", &cRadius, 0.f, 1.f, "%.3f", 0); 
+        ImGui::SliderFloat("Alignement", &aRadius, 0.f, 1.f, "%.3f", 0); 
+        ImGui::End();
+
+
         for(int i = 0; i<20; i++){
-            boids_tab[i].drawBoids(ctx);
-            boids_tab[i].updateBoids(boids_tab);
+            boids_tab[i].drawBoids(ctx, radius);
+            boids_tab[i].updateBoids(boids_tab, sRadius, cRadius, aRadius);
         }
         
     };
