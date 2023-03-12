@@ -21,11 +21,16 @@ class Boids{
 	// Boids(Boids& b); //par copie
 
 
-	void drawBoids(p6::Context& ctx) const;
+	void drawBoids(p6::Context& ctx, p6::Radius radius) const;
 
-	void updateBoids(std::vector<Boids>& boids_tab);
+	void updateBoids(std::vector<Boids>& boids_tab, float sRadius, float cRadius, float aRadius);
 
-	void separationBoids(std::vector<Boids>& boids_tab);
+
+	void separationBoids(std::vector<Boids>& boids_tab, float sRadius);
+
+	void cohesionBoids(std::vector<Boids>& boids_tab, float cRadius);
+
+	void alignmentBoids(std::vector<Boids>& boids_tab, float aRadius);
 
 };
 
