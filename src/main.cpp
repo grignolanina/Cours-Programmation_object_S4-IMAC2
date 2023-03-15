@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
 
     std::vector<Boids> boids_tab;
-    for(int i = 0; i<20; i++){
+    for(int i = 0; i<50; i++){
         Boids T(ctx.aspect_ratio());
         boids_tab.push_back(T);
     }
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
         ImGui::End();
 
 
-        for(int i = 0; i<20; i++){
+        for(int i = 0; i<50; i++){
             boids_tab[i].drawBoids(ctx, radius);
             boids_tab[i].updateBoids(boids_tab, sRadius, cRadius, aRadius);
         }
