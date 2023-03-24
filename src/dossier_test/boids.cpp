@@ -11,7 +11,7 @@
 // Boids::Boids(glm::vec2 pos, glm::vec3 color, float size):m_pos(pos), m_color(color), m_size(size){}
 
 Boids::Boids(float aspect_ratio)
-    : m_pos(glm::vec2{p6::random::number(-aspect_ratio, aspect_ratio), p6::random::number(-1, 1)}), m_color(glm::vec3{p6::random::number(0, 1), p6::random::number(0, 1), p6::random::number(0, 1)}), m_size(0.05), 
+    : m_pos(glm::vec2{p6::random::number(-aspect_ratio, aspect_ratio), p6::random::number(-1, 1)}), m_color(glm::vec3{p6::random::number(0, 1), p6::random::number(0, 1), p6::random::number(0, 1)}), m_size(0.02), 
     // m_dir(glm::vec2(p6::random::number(-aspect_ratio, aspect_ratio), p6::random::number(-aspect_ratio, aspect_ratio))), 
     m_speed(p6::random::number(0., 0.02), p6::random::number(0., 0.02)), m_aspect_ratio(aspect_ratio)
 {}
@@ -31,9 +31,10 @@ void Boids::updateBoids(std::vector<Boids>& boids_tab, float sRadius, float cRad
     //m_pos += displacement;
     for (auto& elem : boids_tab)
     {
+        elem.separationBoids(boids_tab, sRadius);
         elem.alignmentBoids(boids_tab, aRadius);
         elem.cohesionBoids(boids_tab, cRadius);
-        elem.separationBoids(boids_tab, sRadius);
+        
     }
     m_pos += m_speed;
     if(m_pos.x < -m_aspect_ratio+m_size){
@@ -157,7 +158,7 @@ void Boids::cohesionBoids(std::vector<Boids>& boids_tab, float cRadius)
 
         if (distance < cRadius)
         {
-            new_displacement += elem.m_pos * cohesion_weight;
+            new_displacement += (elem.m_pos -m_pos)* cohesion_weight;
             count++;
         }
     }
@@ -174,7 +175,7 @@ void Boids::cohesionBoids(std::vector<Boids>& boids_tab, float cRadius)
         }
 
         //m_speed = new_displacement;
-        m_speed = (new_displacement-m_pos)*m_max_force;
+        m_speed += (new_displacement)*m_max_force;
     }
 }
 
@@ -185,11 +186,11 @@ void Boids::alignmentBoids(std::vector<Boids>& boids_tab, float aRadius)
     int       count = 0;
 
     for (auto& elem : boids_tab)
-    {
-        if (&elem == this)
-            continue;
+     {
+    //     if (&elem == this)
+    //         continue;
 
-        float distance = glm::length(elem.m_pos - this->m_pos);
+       const float distance = glm::length(elem.m_pos - this->m_pos);
 
         if (distance < aRadius)
         {
