@@ -36,17 +36,43 @@ void Boids::updateBoids(std::vector<Boids>& boids_tab, float sRadius, float cRad
         elem.separationBoids(boids_tab, sRadius);
     }
     m_pos += m_speed;
-    if (abs(m_pos.x) >= m_aspect_ratio)
-    {
-        m_pos.x *= -1;
+    if(m_pos.x < -m_aspect_ratio+m_size){
+        m_speed.x += 0.05;
     }
-    if (abs(m_pos.y) >= 1)
-    {
-        m_pos.y *= -1;
+    if(m_pos.x >m_aspect_ratio-m_size){
+        m_speed.x -= 0.05;
     }
+    if(m_pos.y < -1+m_size){
+        m_speed.y += 0.05;
+    }
+    if(m_pos.y > 1-m_size){
+        m_speed.y -=0.05;
+    }
+    // if (abs(m_pos.x) >= m_aspect_ratio)
+    // {
+    //     // glm::normalize(m_speed)
+    //     m_speed = -m_speed;
+    //     // m_pos.x *= -1;
+    // }
+    // if (abs(m_pos.y) >= 1)
+    // {
+    //     // m_pos.y *= -1;
+    //     m_speed = -m_speed;
+
+    // }
 
     
 }
+
+// bool Boids::inWindows(){
+//     if(abs(this->m_pos.x) > m_aspect_ratio){
+//         return false;
+//     } 
+//     if(abs(this->m_pos.y) >=1) {
+//         return false;
+//     } 
+
+// }
 
 // //pour éviter les collisions
 // void Boids::separationBoids(std::vector<Boids>& boids_tab){
@@ -92,7 +118,6 @@ void Boids::separationBoids(std::vector<Boids>& boids_tab, float sRadius)
             difference /= distance;
             new_displacement += difference;
             
-
             // new_speed += elem.m_speed;
             count++;
         }

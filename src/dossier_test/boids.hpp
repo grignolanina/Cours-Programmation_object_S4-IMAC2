@@ -28,6 +28,8 @@ class Boids{
 
 	void updateBoids(std::vector<Boids>& boids_tab, float sRadius, float cRadius, float aRadius);
 
+	// bool inWindows();
+
 
 	void separationBoids(std::vector<Boids>& boids_tab, float sRadius);
 
