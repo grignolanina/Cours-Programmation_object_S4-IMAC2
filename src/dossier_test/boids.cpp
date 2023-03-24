@@ -31,7 +31,7 @@ void Boids::updateBoids(std::vector<Boids>& boids_tab, float sRadius, float cRad
     //m_pos += displacement;
     for (auto& elem : boids_tab)
     {
-        //elem.alignmentBoids(boids_tab, aRadius);
+        elem.alignmentBoids(boids_tab, aRadius);
         elem.cohesionBoids(boids_tab, cRadius);
         elem.separationBoids(boids_tab, sRadius);
     }
@@ -148,7 +148,8 @@ void Boids::cohesionBoids(std::vector<Boids>& boids_tab, float cRadius)
             new_displacement = glm::normalize(new_displacement)*m_max_force;
         }
 
-        m_speed = new_displacement;
+        //m_speed = new_displacement;
+        m_speed = (new_displacement-m_pos)*m_max_force;
     }
 }
 
