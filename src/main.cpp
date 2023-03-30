@@ -35,19 +35,19 @@ int main(int argc, char* argv[])
     }
 
     float radius = 0.02;
-    float sRadius = 0.19;
-    float cRadius = 0.4;
-    float aRadius = 0.6;
+    float sRadius = 0.05;
+    float cRadius = 0.2;
+    float aRadius = 0.1;
 
 
     ctx.update = [&](){
-        ctx.background(p6::NamedColor::White);
+        ctx.background(p6::NamedColor::Black);
 
         ImGui::Begin("Params");
         ImGui::SliderFloat("Size", &radius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Separation", &sRadius, 0.f, 0.1f, "%.3f", 0); 
-        ImGui::SliderFloat("Cohesion", &cRadius, 0.f, 1.f, "%.3f", 0); 
-        ImGui::SliderFloat("Alignement", &aRadius, 0.f, 1.f, "%.3f", 0); 
+        ImGui::SliderFloat("Cohesion", &cRadius, 0.f, 0.5f, "%.3f", 0); 
+        ImGui::SliderFloat("Alignement", &aRadius, 0.f, 0.5f, "%.3f", 0); 
         ImGui::End();
 
 

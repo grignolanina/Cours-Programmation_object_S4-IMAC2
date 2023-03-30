@@ -21,7 +21,7 @@ Boids::Boids(float aspect_ratio)
 void Boids::drawBoids(p6::Context& ctx, p6::Radius radius) const
 {
     ctx.fill = {this->m_color.x, this->m_color.y, this->m_color.z};
-    ctx.square(p6::Center{this->m_pos.x, this->m_pos.y}, p6::Radius(radius));
+    ctx.circle(p6::Center{this->m_pos.x, this->m_pos.y}, p6::Radius(radius));
     ctx.use_stroke = false;
 }
 
@@ -31,8 +31,9 @@ void Boids::updateBoids(std::vector<Boids>& boids_tab, float sRadius, float cRad
     //m_pos += displacement;
     for (auto& elem : boids_tab)
     {
-        elem.separationBoids(boids_tab, sRadius);
-        elem.alignmentBoids(boids_tab, aRadius);
+               elem.alignmentBoids(boids_tab, aRadius); 
+               elem.separationBoids(boids_tab, sRadius);
+
         elem.cohesionBoids(boids_tab, cRadius);
         
     }
@@ -143,7 +144,7 @@ void Boids::separationBoids(std::vector<Boids>& boids_tab, float sRadius)
 void Boids::cohesionBoids(std::vector<Boids>& boids_tab, float cRadius)
 {
     // float perceptionRadius = 0.4f;
-    glm::vec2 new_displacement{0.0f, 0.0f};
+    glm::vec2 new_position{0.0f, 0.0f};
     float     cohesion_weight = 0.5f;
 
     // float separation_weigth = 1.0f;
@@ -158,31 +159,31 @@ void Boids::cohesionBoids(std::vector<Boids>& boids_tab, float cRadius)
 
         if (distance < cRadius)
         {
-            new_displacement += (elem.m_pos -m_pos)* cohesion_weight;
+            new_position += (elem.m_pos -m_pos)* cohesion_weight;
             count++;
         }
     }
 
     if (count > 0)
     {
-        new_displacement /= count;
-        //new_displacement = new_displacement - this->m_pos;
-        // new_displacement = glm::normalize(new_displacement);
-        //m_speed =new_displacement * this->m_speed_max;
+        new_position /= count;
+        //new_position = new_position - this->m_pos;
+        // new_position = glm::normalize(new_position);
+        //m_speed =new_position * this->m_speed_max;
 
-        if (length(new_displacement)>m_max_force){
-            new_displacement = glm::normalize(new_displacement)*m_max_force;
+        if (length(new_position)>m_max_force){
+            new_position = glm::normalize(new_position)*m_max_force;
         }
 
         //m_speed = new_displacement;
-        m_speed += (new_displacement)*m_max_force;
+        m_speed += (new_position)*m_max_force;
     }
 }
 
 void Boids::alignmentBoids(std::vector<Boids>& boids_tab, float aRadius)
 {
     // float perceptionRadius = 0.2f;
-    glm::vec2 new_displacement{0.0f, 0.0f};
+    glm::vec2 new_velocity{0.0f, 0.0f};
     int       count = 0;
 
     for (auto& elem : boids_tab)
@@ -194,15 +195,22 @@ void Boids::alignmentBoids(std::vector<Boids>& boids_tab, float aRadius)
 
         if (distance < aRadius)
         {
-            new_displacement += elem.m_speed;
+            new_velocity += elem.m_speed;
             count++;
         }
     }
 
     if (count > 0)
     {
-        new_displacement /= count;
-        new_displacement = glm::normalize(new_displacement);
-        m_speed            = new_displacement * this->m_speed_max;
+        // new_velocity /= count;
+        // new_velocity = glm::normalize(new_velocity);
+        // m_speed            = new_velocity * this->m_speed_max;
+
+        new_velocity /= count;
+
+        if(length(new_velocity)>m_max_force){
+            new_velocity = glm::normalize(new_velocity);
+            m_speed            = new_velocity * this->m_speed_max;
+        }
     }
 }
