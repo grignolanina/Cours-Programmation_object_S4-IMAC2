@@ -1,14 +1,12 @@
 #include <stdlib.h>
 #include "glm/fwd.hpp"
+#include "imgui.h"
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest/doctest.h"
 #include "dossier_test/test.hpp"
 #include "dossier_test/boids.hpp"
 #include <vector>
-
-// constexpr int FLOAT_MIN = 0;
-// constexpr int FLOAT_MAX = 1;
 
 
 int main(int argc, char* argv[])
@@ -24,7 +22,6 @@ int main(int argc, char* argv[])
 
     // Actual app
     auto ctx = p6::Context{{.title = "Projet-Programmation_objet_IMAC2"}};
-    // p6::Angle rotation = 0.011_turn;
     ctx.maximize_window();
 
 
@@ -38,12 +35,14 @@ int main(int argc, char* argv[])
     float sRadius = 0.05;
     float cRadius = 0.2;
     float aRadius = 0.1;
+    int nb_boids = 20;
 
 
     ctx.update = [&](){
         ctx.background(p6::NamedColor::Black);
 
         ImGui::Begin("Params");
+        ImGui::SliderInt("Nb boids",&nb_boids, 0, 50, "%.3f", 0 );
         ImGui::SliderFloat("Size", &radius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Separation", &sRadius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Cohesion", &cRadius, 0.f, 0.5f, "%.3f", 0); 
@@ -51,7 +50,7 @@ int main(int argc, char* argv[])
         ImGui::End();
 
 
-        for(int i = 0; i<50; i++){
+        for(int i = 0; i<nb_boids; i++){
             boids_tab[i].drawBoids(ctx, radius);
             boids_tab[i].updateBoids(boids_tab, sRadius, cRadius, aRadius);
         }
