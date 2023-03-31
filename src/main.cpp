@@ -25,13 +25,13 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
 
 
-    std::vector<Boids> boids_tab;
+    std::vector<Boid> boids_tab;
     for(int i = 0; i<50; i++){
-        Boids T(ctx.aspect_ratio());
+        Boid T(ctx.aspect_ratio());
         boids_tab.push_back(T);
     }
 
-    float radius = 0.02;
+    // float radius = 0.02;
     float sRadius = 0.05;
     float cRadius = 0.2;
     float aRadius = 0.1;
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 
         ImGui::Begin("Params");
         ImGui::SliderInt("Nb boids",&nb_boids, 0, 50, "%.3f", 0 );
-        ImGui::SliderFloat("Size", &radius, 0.f, 0.1f, "%.3f", 0); 
+        // ImGui::SliderFloat("Size", &radius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Separation", &sRadius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Cohesion", &cRadius, 0.f, 0.5f, "%.3f", 0); 
         ImGui::SliderFloat("Alignement", &aRadius, 0.f, 0.5f, "%.3f", 0); 
@@ -51,8 +51,8 @@ int main(int argc, char* argv[])
 
 
         for(int i = 0; i<nb_boids; i++){
-            boids_tab[i].drawBoids(ctx, radius);
-            boids_tab[i].updateBoids(boids_tab, sRadius, cRadius, aRadius);
+            boids_tab[i].drawBoid(ctx);
+            boids_tab[i].updateBoid(boids_tab, sRadius, cRadius, aRadius);
         }
         
     };

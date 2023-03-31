@@ -3,39 +3,59 @@
 #include "glm/fwd.hpp"
 #include "p6/p6.h"
 
-class Boids{
+class Boid{
 	private:
 	glm::vec2 m_pos;
 	glm::vec3 m_color;
 	float m_size;
-	// p6::Angle m_dir;
-	glm::vec2 m_speed;  //creer une classe deplacement ? pour donner le meme déplacement à des groupes de boids
-	float m_aspect_ratio; // pour recup la taille de la fenetre
+	glm::vec2 m_speed;
+	float m_aspect_ratio;
 	
-	glm::vec2 m_speed_max= glm::vec2(0.02f, 0.02f);
-	float m_max_force =0.01;
-
 
 	public :
-	// Boids();
-	// Boids(glm::vec2 pos, glm::vec3 color, float size);
-	explicit Boids(float aspect_ratio);
+	/// \brief default constructor
+	// Boid();
 
-	// Boids(Boids& b); //par copie
+	/// \brief constructor random
+	/// \param aspect_ratio window ratio
+	explicit Boid(float aspect_ratio);
 
-
-	void drawBoids(p6::Context& ctx, p6::Radius radius) const;
-
-	void updateBoids(std::vector<Boids>& boids_tab, float sRadius, float cRadius, float aRadius);
-
-	// bool inWindows();
+	/// \brief destructor
+	// ~Boid();
 
 
-	void separationBoids(std::vector<Boids>& boids_tab, float sRadius);
+	//constructeur classique et fonction libre qui met random
+	//add par defaut
+	//destructeur
 
-	void cohesionBoids(std::vector<Boids>& boids_tab, float cRadius);
+	/// \brief draw boid in p6 window
+	/// \param ctx the p6 context of creation
+	void drawBoid(p6::Context& ctx) const;
 
-	void alignmentBoids(std::vector<Boids>& boids_tab, float aRadius);
+	/// \brief update behavior and position of all boids in the tab
+	/// \param boidsTab tab of boids
+	/// \param sRadius radius of separation
+	/// \param cRadius radius of cohesion
+	/// \param aRadius radius of alignement
+	void updateBoid(std::vector<Boid>& boidsTab, float sRadius, float cRadius, float aRadius);
+
+	/// \brief verify if the boids stay in the windows
+	void stayInWindows();
+
+	/// \brief update behavior and position of all boids in the tab
+	/// \param boidsTab tab of boids
+	/// \param sRadius radius of separation
+	void separationBoids(std::vector<Boid>& boidsTab, float sRadius);
+
+	/// \brief update behavior and position of all boids in the tab
+	/// \param boidsTab tab of boids
+	/// \param cRadius radius of cohesion
+	void cohesionBoids(std::vector<Boid>& boidsTab, float cRadius);
+
+	/// \brief update behavior and position of all boids in the tab
+	/// \param boidsTab tab of boids
+	/// \param aRadius radius of alignement
+	void alignmentBoids(std::vector<Boid>& boidsTab, float aRadius);
 
 };
 
