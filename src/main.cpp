@@ -4,8 +4,7 @@
 #include "p6/p6.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest/doctest.h"
-#include "dossier_test/test.hpp"
-#include "dossier_test/boids.hpp"
+#include "boids/boids.hpp"
 #include <vector>
 
 

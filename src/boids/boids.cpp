@@ -1,4 +1,4 @@
-#include "dossier_test/Boids.hpp"
+#include "boids/Boids.hpp"
 #include <stdlib.h>
 #include "glm/fwd.hpp"
 #include "glm/geometric.hpp"
@@ -33,12 +33,13 @@ void Boid::updateBoid(std::vector<Boid>& boidsTab, float sRadius, float cRadius,
 
     for (auto& elem : boidsTab)
     {
-        elem.stayInWindows();
         elem.alignmentBoids(boidsTab, aRadius); 
         elem.separationBoids(boidsTab, sRadius);
         elem.cohesionBoids(boidsTab, cRadius);
     }
     m_pos += m_speed;
+    this->stayInWindows();
+
 }
 
 void Boid::stayInWindows(){
