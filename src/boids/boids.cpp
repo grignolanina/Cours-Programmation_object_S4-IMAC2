@@ -11,13 +11,30 @@ static constexpr glm::vec2 speedMax= glm::vec2(0.02f, 0.02f);
 static constexpr float maxForce =0.01f;
 static constexpr float cohesionWeight = 0.5f;
 
-Boid::Boid(float aspect_ratio)
+Boid::Boid():
+m_pos(glm::vec2(0., 0.)),
+m_color(glm::vec3(1., 1., 1.)),
+m_size(0.02),
+m_speed(0.02)
+{
+}
+
+Boid::Boid(glm::vec2 pos, glm::vec3 color, float size, glm::vec2 speed):
+m_pos(pos),
+m_color(color),
+m_size(size),
+m_speed(speed)
+{
+}
+
+
+Boid::Boid(float aspectRatio)
     : 
-    m_pos(glm::vec2{p6::random::number(-aspect_ratio, aspect_ratio), p6::random::number(-1, 1)}), 
+    m_pos(glm::vec2{p6::random::number(-aspectRatio, aspectRatio), p6::random::number(-1, 1)}), 
     m_color(glm::vec3{p6::random::number(0, 1), p6::random::number(0, 1), p6::random::number(0, 1)}), 
+    // m_color(glm::vec3{0., 0., 1.}), 
     m_size(0.02), 
-    m_speed(p6::random::number(0., 0.02), p6::random::number(0., 0.02)),
-    m_aspect_ratio(aspect_ratio)
+    m_speed(p6::random::number(0., 0.02), p6::random::number(0., 0.02))
 {
 }
 
@@ -28,7 +45,7 @@ void Boid::drawBoid(p6::Context& ctx) const
     ctx.use_stroke = false;
 }
 
-void Boid::updateBoid(std::vector<Boid>& boidsTab, float sRadius, float cRadius, float aRadius)
+void Boid::updateBoid(p6::Context& ctx, std::vector<Boid>& boidsTab, float sRadius, float cRadius, float aRadius)
 {
 
     for (auto& elem : boidsTab)
@@ -38,15 +55,15 @@ void Boid::updateBoid(std::vector<Boid>& boidsTab, float sRadius, float cRadius,
         elem.cohesionBoids(boidsTab, cRadius);
     }
     m_pos += m_speed;
-    this->stayInWindows();
+    this->stayInWindows(ctx);
 
 }
 
-void Boid::stayInWindows(){
-    if(m_pos.x < -m_aspect_ratio+m_size){
+void Boid::stayInWindows(p6::Context& ctx){
+    if(m_pos.x < -ctx.aspect_ratio()+m_size){
         m_speed.x += 0.05;
     }
-    if(m_pos.x >m_aspect_ratio-m_size){
+    if(m_pos.x >ctx.aspect_ratio()-m_size){
         m_speed.x -= 0.05;
     }
     if(m_pos.y < -1+m_size){
@@ -142,3 +159,7 @@ void Boid::alignmentBoids(std::vector<Boid>& boidsTab, float aRadius)
         }
     }
 }
+
+// void randomBoids(Boid& b, float aspectRation){
+//     b.m_pos.x = p6::random::number(-aspectRatio, aspectRatio);
+// }

@@ -30,6 +30,10 @@ int main(int argc, char* argv[])
         boids_tab.push_back(T);
     }
 
+    //test class par default ok
+    Boid test = Boid();
+    boids_tab.push_back(test);
+
     // float radius = 0.02;
     float sRadius = 0.05;
     float cRadius = 0.2;
@@ -41,7 +45,7 @@ int main(int argc, char* argv[])
         ctx.background(p6::NamedColor::Black);
 
         ImGui::Begin("Params");
-        ImGui::SliderInt("Nb boids",&nb_boids, 0, 50, "%.3f", 0 );
+        ImGui::SliderInt("Nb boids",&nb_boids, 0, 51, "%.3f", 0 );
         // ImGui::SliderFloat("Size", &radius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Separation", &sRadius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Cohesion", &cRadius, 0.f, 0.5f, "%.3f", 0); 
@@ -51,9 +55,8 @@ int main(int argc, char* argv[])
 
         for(int i = 0; i<nb_boids; i++){
             boids_tab[i].drawBoid(ctx);
-            boids_tab[i].updateBoid(boids_tab, sRadius, cRadius, aRadius);
-        }
-        
+            boids_tab[i].updateBoid(ctx, boids_tab, sRadius, cRadius, aRadius);
+        }   
     };
 
 

@@ -8,17 +8,22 @@ class Boid{
 	glm::vec2 m_pos;
 	glm::vec3 m_color;
 	float m_size;
-	glm::vec2 m_speed;
-	float m_aspect_ratio;
-	
+	glm::vec2 m_speed;	
 
 	public :
 	/// \brief default constructor
-	// Boid();
+	Boid();
+
+	/// \brief constructor with param
+	/// \param pos position of boid
+	/// \param color color of boid
+	/// \param size size of boid
+	/// \param speed speed of boid
+	Boid(glm::vec2 pos, glm::vec3 color, float size, glm::vec2 speed);
 
 	/// \brief constructor random
-	/// \param aspect_ratio window ratio
-	explicit Boid(float aspect_ratio);
+	/// \param aspectRatio window ratio
+	explicit Boid(float aspecRatio);
 
 	/// \brief destructor
 	// ~Boid();
@@ -33,14 +38,16 @@ class Boid{
 	void drawBoid(p6::Context& ctx) const;
 
 	/// \brief update behavior and position of all boids in the tab
+	/// \param ctx the p6 context of creation
 	/// \param boidsTab tab of boids
 	/// \param sRadius radius of separation
 	/// \param cRadius radius of cohesion
 	/// \param aRadius radius of alignement
-	void updateBoid(std::vector<Boid>& boidsTab, float sRadius, float cRadius, float aRadius);
+	void updateBoid(p6::Context& ctx, std::vector<Boid>& boidsTab, float sRadius, float cRadius, float aRadius);
 
 	/// \brief verify if the boids stay in the windows
-	void stayInWindows();
+	/// \param ctx the p6 context of creation
+	void stayInWindows(p6::Context& ctx);
 
 	/// \brief update behavior and position of all boids in the tab
 	/// \param boidsTab tab of boids
@@ -58,4 +65,6 @@ class Boid{
 	void alignmentBoids(std::vector<Boid>& boidsTab, float aRadius);
 
 };
+
+// void randomBoids(Boid& b, float aspectRation);
 
