@@ -24,28 +24,28 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
 
 
-    std::vector<Boid> boids_tab;
+    std::vector<Boid> boidsTab;
     for(int i = 0; i<50; i++){
         Boid T(ctx.aspect_ratio());
-        boids_tab.push_back(T);
+        boidsTab.push_back(T);
     }
 
     //test class par default ok
     Boid test = Boid();
-    boids_tab.push_back(test);
+    boidsTab.push_back(test);
 
     // float radius = 0.02;
     float sRadius = 0.05;
     float cRadius = 0.2;
     float aRadius = 0.1;
-    int nb_boids = 20;
+    int nbBoids = 20;
 
 
     ctx.update = [&](){
         ctx.background(p6::NamedColor::Black);
 
         ImGui::Begin("Params");
-        ImGui::SliderInt("Nb boids",&nb_boids, 0, 51, "%.3f", 0 );
+        ImGui::SliderInt("Nb boids",&nbBoids, 0, 51, "%.3f", 0 );
         // ImGui::SliderFloat("Size", &radius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Separation", &sRadius, 0.f, 0.1f, "%.3f", 0); 
         ImGui::SliderFloat("Cohesion", &cRadius, 0.f, 0.5f, "%.3f", 0); 
@@ -53,9 +53,9 @@ int main(int argc, char* argv[])
         ImGui::End();
 
 
-        for(int i = 0; i<nb_boids; i++){
-            boids_tab[i].drawBoid(ctx);
-            boids_tab[i].updateBoid(ctx, boids_tab, sRadius, cRadius, aRadius);
+        for(int i = 0; i<nbBoids; i++){
+            boidsTab[i].drawBoid(ctx);
+            boidsTab[i].updateBoid(ctx, boidsTab, sRadius, cRadius, aRadius);
         }   
     };
 

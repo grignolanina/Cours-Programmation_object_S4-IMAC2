@@ -79,7 +79,7 @@ void Boid::stayInWindows(p6::Context& ctx){
 
 void Boid::separationBoids(std::vector<Boid>& boidsTab, float sRadius)
 {
-    glm::vec2 new_displacement{0.0f, 0.0f};
+    glm::vec2 newDisplacement{0.0f, 0.0f};
     int count = 0;
     for (auto& elem : boidsTab)
     {
@@ -92,23 +92,23 @@ void Boid::separationBoids(std::vector<Boid>& boidsTab, float sRadius)
         {
                 glm::vec2 difference = glm::normalize(this->m_pos-elem.m_pos);
                 difference /= distance;
-                new_displacement += difference;
+                newDisplacement += difference;
                 count++;
         }
     }
     if (count > 0)
     {
-        new_displacement /= count;
-        if (length(new_displacement)>maxForce){
-            new_displacement = glm::normalize(new_displacement)*maxForce;
+        newDisplacement /= count;
+        if (length(newDisplacement)>maxForce){
+            newDisplacement = glm::normalize(newDisplacement)*maxForce;
         }
-        m_speed = new_displacement;
+        m_speed = newDisplacement;
     }
 }
 
 void Boid::cohesionBoids(std::vector<Boid>& boidsTab, float cRadius)
 {
-    glm::vec2 new_position{0.0f, 0.0f};
+    glm::vec2 newPosition{0.0f, 0.0f};
     int count = 0;
 
     for (auto& elem : boidsTab)
@@ -118,26 +118,26 @@ void Boid::cohesionBoids(std::vector<Boid>& boidsTab, float cRadius)
         float distance = glm::length(elem.m_pos - this->m_pos);
         if (distance < cRadius)
         {
-            new_position += (elem.m_pos -m_pos)* cohesionWeight;
+            newPosition += (elem.m_pos -m_pos)* cohesionWeight;
             count++;
         }
     }
 
     if (count > 0)
     {
-        new_position /= count;
+        newPosition /= count;
 
-        if (length(new_position)>maxForce){
-            new_position = glm::normalize(new_position)*maxForce;
+        if (length(newPosition)>maxForce){
+            newPosition = glm::normalize(newPosition)*maxForce;
         }
 
-        m_speed += (new_position)*maxForce;
+        m_speed += (newPosition)*maxForce;
     }
 }
 
 void Boid::alignmentBoids(std::vector<Boid>& boidsTab, float aRadius)
 {
-    glm::vec2 new_velocity{0.0f, 0.0f};
+    glm::vec2 newVelocity{0.0f, 0.0f};
     int count = 0;
 
     for (auto& elem : boidsTab)
@@ -145,17 +145,17 @@ void Boid::alignmentBoids(std::vector<Boid>& boidsTab, float aRadius)
        const float distance = glm::length(elem.m_pos - this->m_pos);
         if (distance < aRadius)
         {
-            new_velocity += elem.m_speed;
+            newVelocity += elem.m_speed;
             count++;
         }
     }
 
     if (count > 0)
     {
-        new_velocity /= count;
-        if(length(new_velocity)>maxForce){
-            new_velocity = glm::normalize(new_velocity);
-            m_speed            = new_velocity * speedMax;
+        newVelocity /= count;
+        if(length(newVelocity)>maxForce){
+            newVelocity = glm::normalize(newVelocity);
+            m_speed            = newVelocity * speedMax;
         }
     }
 }
