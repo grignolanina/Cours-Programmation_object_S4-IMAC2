@@ -160,6 +160,24 @@ void Boid::alignmentBoids(std::vector<Boid>& boidsTab, float aRadius)
     }
 }
 
-// void randomBoids(Boid& b, float aspectRation){
-//     b.m_pos.x = p6::random::number(-aspectRatio, aspectRatio);
-// }
+Boid randomBoids(float aspectRatio){
+    Boid T = Boid();
+    T.randomPos(aspectRatio);
+    T.randomColor();
+    T.randomSpeed();
+    return T;
+}
+
+
+void Boid::randomPos(float aspectRatio){
+    this->m_pos = glm::vec2({p6::random::number(-aspectRatio, aspectRatio), p6::random::number(-1, 1)});
+} 
+    
+void Boid::randomColor(){
+    this->m_color = glm::vec3({p6::random::number(0, 1), p6::random::number(0, 1), p6::random::number(0, 1)});
+}
+
+
+void Boid::randomSpeed(){
+    this->m_speed = glm::vec2(p6::random::number(0., 0.02), p6::random::number(0., 0.02));
+}

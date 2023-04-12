@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "boids/Boids.hpp"
 #include "glm/fwd.hpp"
 #include "imgui.h"
 #include "p6/p6.h"
@@ -24,10 +25,17 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
 
 
+    // std::vector<Boid> boidsTab;
+    // for(int i = 0; i<50; i++){
+    //     Boid T(ctx.aspect_ratio());
+    //     boidsTab.push_back(T);
+    // }
     std::vector<Boid> boidsTab;
     for(int i = 0; i<50; i++){
-        Boid T(ctx.aspect_ratio());
-        boidsTab.push_back(T);
+        // Boid T = randomBoids(ctx.aspect_ratio());
+        // boidsTab.push_back(T);
+        boidsTab.push_back(randomBoids(ctx.aspect_ratio()));
+
     }
 
     //test class par default ok

@@ -64,7 +64,20 @@ class Boid{
 	/// \param aRadius radius of alignement
 	void alignmentBoids(std::vector<Boid>& boidsTab, float aRadius);
 
+	/// \brief change pos of one boid randomly
+	/// \param aspectRatio windows ratio
+	void randomPos(float aspectRatio);
+
+	///\brief change color of one boid randomly
+	void randomColor();
+
+	///\brief change speed of one boid randomly
+	void randomSpeed();
+
 };
 
-// void randomBoids(Boid& b, float aspectRation);
+/// \brief return one boid with random caracteristic
+/// \param aspectRatio windows ratio
+Boid randomBoids(float aspectRatio);
+
 
